@@ -5,8 +5,13 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
 
-@Entity
-@Table
+@Entity(name = "Book")
+@Table(
+        name = "book",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "book_isbn_unique", columnNames = "isbn")
+        }
+)
 public class Book {
 
     @Id
@@ -19,10 +24,37 @@ public class Book {
             strategy = GenerationType.SEQUENCE,
             generator = "book_sequence"
     )
+    @Column(
+            name = "id",
+            updatable = false
+    )
     private Long id;
+
+    @Column(
+            name = "title",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     private String title;
+
+    @Column(
+            name = "author",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     private String author;
+
+    @Column(
+            name = "isbn",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     private String isbn;
+
+    @Column(
+            name = "publish_date",
+            nullable = false
+    )
     private LocalDate publishDate;
 
     @Transient
