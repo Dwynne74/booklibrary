@@ -27,7 +27,7 @@ public class BookService {
     public void addBook(Book book) {
         Optional<Book> bookOptional = bookRepository.findByIsbn(book.getIsbn());
         if (bookOptional.isPresent()) {
-            throw new IllegalArgumentException("Isbn already exists");
+            throw new IllegalArgumentException("ISBN already exists");
         }
         bookRepository.save(book);
     }
@@ -57,6 +57,8 @@ public class BookService {
             }
             book.setIsbn(isbn);
         }
+
+        bookRepository.save(book);
     }
 
     public Book getBookByTitle(String title) {
